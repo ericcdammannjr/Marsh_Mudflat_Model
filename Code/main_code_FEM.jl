@@ -58,10 +58,6 @@ bm = zeros(n+1); bm[1] = bm0
 dbfdt = zeros(n)
 ddfdt = zeros(n)
 ddmdt = zeros(n)
-Ba = zeros(n)
-Be = zeros(n)
-O = zeros(n)
-Rref = zeros(n)
 
 for i in 1:n
 
@@ -79,8 +75,8 @@ for i in 1:n
 
     Bfrac = (B/Bpeak)
     AMC = (182.5)*B*(νGp)/(365*24*60*60)
-    Rref[i] = AMC*χref
-    O[i] = (1/ϕ)*(Rref[i]/ρo)
+    Rref = AMC*χref
+    O = (1/ϕ)*(Rref/ρo)
 
     # Average Depths
 
@@ -121,17 +117,17 @@ for i in 1:n
     # Marsh Platform Erosion rate
 
     W = wave_power(bf[i],Db,Uref,r,g)
-    Be[i] = ke*W/(db-dm[i])
+    Be = ke*W/(db-dm[i])
 
     # Marsh Platform Progradation Rate
 
-    Ba[i] = ka*Cr*ws/ρ
+    Ba = ka*Cr*ws/ρ
 
     # Morphodynamic Equations
 
-    dbfdt[i] = Be[i]-Ba[i]                                      
-    ddfdt[i] = -(Be[i]-Ba[i])*(df[i]-dm[i])/bf[i]+(bm[i]/bf[i])*Fm/ρ+Fc/ρ+R
-    ddmdt[i] = -Fm/ρ-O[i]+R
+    dbfdt[i] = Be-Ba                                      
+    ddfdt[i] = -(Be-Ba)*(df[i]-dm[i])/bf[i]+(bm[i]/bf[i])*Fm/ρ+Fc/ρ+R
+    ddmdt[i] = -Fm/ρ-O+R
 
     # Foward Euler
 
